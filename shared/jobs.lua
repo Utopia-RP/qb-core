@@ -1,8 +1,5 @@
 QBShared = QBShared or {}
 QBShared.ForceJobDefaultDutyAtLogin = true -- true: Force duty state to jobdefaultDuty | false: set duty state from database last saved
-QBShared.QBJobsStatus = false -- true: integrate qb-jobs into the whole of qb-core | false: treat qb-jobs as an add-on resource.
-QBShared.Jobs = {} -- All of below has been migrated into qb-jobs
-if QBShared.QBJobsStatus then return end
 QBShared.Jobs = {
 	['unemployed'] = {
 		label = 'Civilian',
@@ -15,10 +12,33 @@ QBShared.Jobs = {
             },
         },
 	},
+    ['bestbuds'] = {
+        label = 'Bestbuds',
+        defaultDuty = false,
+        offDutyPay = false,
+        grades = {
+            ['0'] = {
+                name = 'Bud Seller',
+                payment = 550
+            },
+            ['1'] = {
+                name = 'Trimmer',
+                payment = 600
+            },
+            ['2'] = {
+                name = 'Proccesor',
+                payment = 750
+            },
+            ['3'] = {
+                name = 'Management',
+                isboss = true,
+                payment = 1250
+            },
+        },
+    },
 	['police'] = {
 		label = 'Law Enforcement',
-        type = "leo",
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
             ['0'] = {
@@ -46,7 +66,7 @@ QBShared.Jobs = {
 	},
 	['ambulance'] = {
 		label = 'EMS',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
             ['0'] = {
@@ -128,7 +148,7 @@ QBShared.Jobs = {
             },
         },
 	},
-    ['bus'] = {
+     ['bus'] = {
 		label = 'Bus',
 		defaultDuty = true,
 		offDutyPay = false,
@@ -169,7 +189,6 @@ QBShared.Jobs = {
 	},
 	['mechanic'] = {
 		label = 'Mechanic',
-        type = "mechanic",
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -193,6 +212,21 @@ QBShared.Jobs = {
                 name = 'Manager',
 				isboss = true,
                 payment = 150
+            },
+        },
+	},
+    ["airdealer"] = {
+		label = "Airship Dealer",
+		defaultDuty = true,
+		grades = {
+            ['0'] = {
+                name = "Trainee",
+                payment = 1000
+            },
+			['1'] = {
+                name = "CEO",
+				isboss = true,
+                payment = 10000
             },
         },
 	},

@@ -33,6 +33,21 @@ function QBCore.Functions.DrawText(x, y, width, height, scale, r, g, b, a, text)
     DrawText(x - width / 2, y - height / 2 + 0.005)
 end
 
+QBCore.Functions.Draw2DText = function(x, y, text, scale)
+    SetTextFont(4)
+    SetTextProportional(7)
+    SetTextScale(scale, scale)
+    SetTextColour(255, 255, 255, 255)
+    SetTextDropShadow(0, 0, 0, 0,255)
+    SetTextDropShadow()
+    SetTextEdge(4, 0, 0, 0, 255)
+    SetTextOutline()
+    SetTextCentre(true)
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawText(x, y)
+end
+
 function QBCore.Functions.DrawText3D(x, y, z, text)
     -- Use local function instead
     SetTextScale(0.35, 0.35)
@@ -991,4 +1006,37 @@ function QBCore.Functions.GetGroundZCoord(coords)
         print(coords)
         return coords
     end
+end
+
+QBCore.Functions.SpawnObject = function(model, coords, cb)
+    local model = (type(model) == 'number' and model or GetHashKey(model))
+
+    Citizen.CreateThread(function()
+        RequestModel(model)
+        local obj = CreateObject(model, coords.x, coords.y, coords.z, true, false, true)
+        SetModelAsNoLongerNeeded(model)
+
+        if cb then
+            cb(obj)
+        end
+    end)
+end
+
+QBCore.Functions.SpawnLocalObject = function(model, coords, cb)
+    local model = (type(model) == 'number' and model or GetHashKey(model))
+
+    Citizen.CreateThread(function()
+        RequestModel(model)
+        local obj = CreateObject(model, coords.x, coords.y, coords.z, false, false, true)
+        SetModelAsNoLongerNeeded(model)
+
+        if cb then
+            cb(obj)
+        end
+    end)
+end
+
+QBCore.Functions.DeleteObject = function(object)
+    SetEntityAsMissionEntity(object, false, true)
+    DeleteObject(object)
 end
